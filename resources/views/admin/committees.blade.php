@@ -24,7 +24,7 @@
     <tr class="border-b">
         <td class="p-3">
             @if($row->image)
-                <img src="{{ asset('storage/'.$row->image) }}" class="w-12 h-12 object-cover rounded-full">
+                <img src="{{ image_url($row->image) }}" class="w-12 h-12 object-cover rounded-full">
             @else
                 <span class="text-xs text-gray-400">Tidak ada foto</span>
             @endif

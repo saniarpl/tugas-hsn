@@ -27,7 +27,7 @@
     <div>
         <label class="block font-bold mb-1">Foto Pengurus</label>
         @if($committee->image)
-            <img src="{{ asset('storage/'.$committee->image) }}" class="w-20 h-20 object-cover rounded mb-2">
+            <img src="{{ image_url($committee->image) }}" class="w-20 h-20 object-cover rounded mb-2">
         @endif
         <input type="file" name="image" class="w-full border p-2 rounded">
     </div>

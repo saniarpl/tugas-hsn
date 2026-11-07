@@ -1,0 +1,12 @@
+.git
+.env
+.env.*
+!.env.example
+database/database.sqlite
+node_modules
+tests
+vendor/
+.vercel
+# Jangan ikutkan cache bootstrap lokal (berisi provider dev seperti Boost)
+# yang membuat package:discover gagal di vendor --no-dev
+bootstrap/cache/

@@ -21,7 +21,7 @@
                 <h2 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-4">Pratinjau Foto KTA</h2>
 
                 <div class="w-32 h-40 rounded-2xl overflow-hidden border-2 border-dashed border-emerald-300 mb-5 relative bg-emerald-50 flex items-center justify-center shadow-inner group">
-                    <img id="photo-preview" src="{{ $member->photo ? asset('storage/' . $member->photo) : '' }}" 
+                    <img id="photo-preview" src="{{ $member->photo ? image_url($member->photo) : '' }}" 
                          class="w-full h-full object-cover absolute inset-0 z-10 {{ $member->photo ? '' : 'hidden' }}">
                     
                     <span id="photo-initial" class="text-5xl font-black text-emerald-600 {{ $member->photo ? 'hidden' : '' }}">

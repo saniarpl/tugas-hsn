@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
+use App\Support\ImageStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -22,7 +22,7 @@ class GalleryController extends Controller
             'image' => 'required|image|max:2048',
         ]);
 
-        $imagePath = $request->file('image')->store('galleries', 'public');
+        $imagePath = ImageStorage::store('galleries', $request->file('image'));
         Gallery::create(['title' => $request->title, 'image' => $imagePath]);
 
         return redirect()->back()->with('success', 'Foto berhasil diunggah.');
@@ -31,7 +31,7 @@ class GalleryController extends Controller
     public function destroy($id)
     {
         $gallery = Gallery::findOrFail($id);
-        Storage::disk('public')->delete($gallery->image);
+        ImageStorage::delete($gallery->image);
         $gallery->delete();
 
         return redirect()->back()->with('success', 'Foto berhasil dihapus.');

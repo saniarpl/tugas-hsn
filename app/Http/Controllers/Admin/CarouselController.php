@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Carousel;
+use App\Support\ImageStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CarouselController extends Controller
 {
@@ -26,7 +26,7 @@ class CarouselController extends Controller
         $data = $request->only(['title', 'description']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('carousels', 'public');
+            $data['image'] = ImageStorage::store('carousels', $request->file('image'));
         }
 
         Carousel::create($data);
@@ -46,10 +46,8 @@ class CarouselController extends Controller
         $data = $request->only(['title', 'description']);
 
         if ($request->hasFile('image')) {
-            if ($carousel->image) {
-                Storage::disk('public')->delete($carousel->image);
-            }
-            $data['image'] = $request->file('image')->store('carousels', 'public');
+            ImageStorage::delete($carousel->image);
+            $data['image'] = ImageStorage::store('carousels', $request->file('image'));
         }
 
         $carousel->update($data);
@@ -60,9 +58,7 @@ class CarouselController extends Controller
     public function destroy($id)
     {
         $carousel = Carousel::findOrFail($id);
-        if ($carousel->image) {
-            Storage::disk('public')->delete($carousel->image);
-        }
+        ImageStorage::delete($carousel->image);
         $carousel->delete();
 
         return redirect()->back()->with('success', 'Banner carousel berhasil dihapus.');

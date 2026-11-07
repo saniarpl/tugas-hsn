@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Member;
+use App\Support\ImageStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -29,9 +29,7 @@ class MemberController extends Controller
         $data = $request->only(['name', 'nik', 'phone', 'address']);
 
         if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            $path = $photo->store('member-photos', 'public');
-            $data['photo'] = $path;
+            $data['photo'] = ImageStorage::store('member-photos', $request->file('photo'));
         }
 
         Member::create($data);
@@ -54,13 +52,9 @@ class MemberController extends Controller
 
         if ($request->hasFile('photo')) {
             // Hapus foto lama jika ada
-            if ($member->photo) {
-                Storage::disk('public')->delete($member->photo);
-            }
+            ImageStorage::delete($member->photo);
 
-            $photo = $request->file('photo');
-            $path = $photo->store('member-photos', 'public');
-            $data['photo'] = $path;
+            $data['photo'] = ImageStorage::store('member-photos', $request->file('photo'));
         }
 
         $member->update($data);
@@ -72,9 +66,7 @@ class MemberController extends Controller
     {
         $member = Member::findOrFail($id);
 
-        if ($member->photo) {
-            Storage::disk('public')->delete($member->photo);
-        }
+        ImageStorage::delete($member->photo);
 
         $member->delete();
 

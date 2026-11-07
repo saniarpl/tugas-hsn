@@ -12,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Berjalan di balik proxy Vercel: supaya Laravel tahu request asli
+        // adalah https (x-forwarded-proto) sehingga redirect/URL tidak
+        // jatuh ke http:// dan cookie Secure tetap terkirim.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

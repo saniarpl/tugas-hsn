@@ -42,7 +42,7 @@
                             <td class="py-4 px-6 font-bold text-slate-800">
                                 <div class="flex items-center gap-3">
                                     @if($member->photo)
-                                        <img src="{{ asset('storage/' . $member->photo) }}" alt="{{ $member->name }}" class="w-8 h-8 rounded-lg object-cover border border-slate-200">
+                                        <img src="{{ image_url($member->photo) }}" alt="{{ $member->name }}" class="w-8 h-8 rounded-lg object-cover border border-slate-200">
                                     @else
                                         <div class="w-8 h-8 bg-emerald-100 text-emerald-800 font-bold rounded-lg flex items-center justify-center text-xs">
                                             {{ strtoupper(substr($member->name, 0, 1)) }}

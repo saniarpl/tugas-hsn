@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Support\ImageStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ActivityController extends Controller
@@ -32,7 +32,7 @@ class ActivityController extends Controller
         $data = $request->only(['title', 'date', 'location', 'description']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('activities', 'public');
+            $data['image'] = ImageStorage::store('activities', $request->file('image'));
         }
 
         Activity::create($data);
@@ -53,10 +53,8 @@ class ActivityController extends Controller
         $data = $request->only(['title', 'date', 'location', 'description']);
 
         if ($request->hasFile('image')) {
-            if ($activity->image) {
-                Storage::disk('public')->delete($activity->image);
-            }
-            $data['image'] = $request->file('image')->store('activities', 'public');
+            ImageStorage::delete($activity->image);
+            $data['image'] = ImageStorage::store('activities', $request->file('image'));
         }
 
         $activity->update($data);
@@ -66,9 +64,7 @@ class ActivityController extends Controller
 
     public function destroy(Activity $activity): RedirectResponse
     {
-        if ($activity->image) {
-            Storage::disk('public')->delete($activity->image);
-        }
+        ImageStorage::delete($activity->image);
         $activity->delete();
 
         return redirect()->back()->with('success', 'Agenda kegiatan berhasil dihapus.');

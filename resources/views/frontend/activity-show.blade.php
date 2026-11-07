@@ -6,7 +6,7 @@
 @section('og_type', 'article')
 @section('og_title', $item->title . ' - WANUWIN')
 @section('og_description', \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($item->description ?? ''))), 160, ''))
-@section('og_image', $item->image ? asset('storage/' . $item->image) : asset('favicon.ico'))
+@section('og_image', $item->image ? image_url($item->image) : asset('favicon.ico'))
 
 @section('content')
 @php
@@ -26,7 +26,7 @@
     <article class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
         @if($item->image)
             <div class="aspect-[16/9] w-full overflow-hidden bg-slate-100">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover">
+                <img src="{{ image_url($item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover">
             </div>
         @endif
 

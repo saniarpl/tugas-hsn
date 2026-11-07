@@ -27,7 +27,7 @@
     <div>
         <label class="block font-bold mb-1">Foto Kegiatan</label>
         @if($activity->image)
-            <img src="{{ asset('storage/'.$activity->image) }}" class="w-32 h-20 object-cover rounded mb-2">
+            <img src="{{ image_url($activity->image) }}" class="w-32 h-20 object-cover rounded mb-2">
         @endif
         <input type="file" name="image" class="w-full border p-2 rounded">
     </div>

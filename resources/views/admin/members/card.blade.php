@@ -86,7 +86,7 @@
                 <!-- Foto -->
                 <div class="w-[16mm] h-[21mm] bg-slate-100 rounded border border-slate-300 overflow-hidden flex-shrink-0">
                     @if($member->photo)
-                        <img src="{{ asset('storage/' . $member->photo) }}" alt="Foto" class="w-full h-full object-cover">
+                        <img src="{{ image_url($member->photo) }}" alt="Foto" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full flex items-center justify-center">
                             <span class="text-[8px] text-slate-400 font-medium">Foto</span>

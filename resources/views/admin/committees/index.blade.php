@@ -31,7 +31,7 @@
                         <tr class="hover:bg-slate-50/60 transition">
                             <td class="py-3 px-6">
                                 @if($committee->image)
-                                    <img src="{{ asset('storage/' . $committee->image) }}" class="w-10 h-10 rounded-full object-cover border border-slate-200">
+                                    <img src="{{ image_url($committee->image) }}" class="w-10 h-10 rounded-full object-cover border border-slate-200">
                                 @else
                                     <div class="w-10 h-10 bg-emerald-100 text-emerald-800 font-extrabold rounded-full flex items-center justify-center text-xs">
                                         {{ strtoupper(substr($committee->name, 0, 1)) }}

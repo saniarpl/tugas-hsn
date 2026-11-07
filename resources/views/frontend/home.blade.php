@@ -35,7 +35,9 @@
             <div class="relative h-[360px] sm:h-[440px] lg:h-[500px]">
                 @foreach($carousels as $key => $carousel)
                     <div x-cloak x-show="active === {{ $key }}" class="absolute inset-0">
-                        <img src="{{ asset('storage/' . $carousel->image) }}" alt="{{ $carousel->title }}" class="absolute inset-0 h-full w-full object-cover">
+                        @if($carousel->image)
+                            <img src="{{ image_url($carousel->image) }}" alt="{{ $carousel->title }}" class="absolute inset-0 h-full w-full object-cover">
+                        @endif
                         <div class="absolute inset-0 bg-gradient-to-r from-[#022c22]/90 via-[#022c22]/60 to-[#022c22]/20"></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-[#022c22]/50 via-transparent to-transparent"></div>
 
@@ -147,7 +149,7 @@
                     <article class="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-colors hover:border-emerald-300">
                         <a href="{{ route('news.show', $item->id) }}" class="block aspect-[16/10] overflow-hidden bg-emerald-900" aria-label="{{ $item->title }}">
                             @if($item->image)
-                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" loading="lazy"
+                                <img src="{{ image_url($item->image) }}" alt="{{ $item->title }}" loading="lazy"
                                      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                             @else
                                 <span class="flex h-full w-full items-center justify-center bg-[#064E3B] text-3xl font-extrabold text-white/80">NU</span>
@@ -298,11 +300,11 @@
             <div class="grid grid-cols-1 gap-5 {{ $galleryGrid }}">
                 @forelse($galleries ?? [] as $gallery)
                     <button type="button" @click="show({{ $loop->index }})"
-                            data-full="{{ asset('storage/' . $gallery->image) }}"
+                            data-full="{{ image_url($gallery->image) }}"
                             data-title="{{ $gallery->title }}"
                             class="group overflow-hidden rounded-lg border border-slate-200 bg-white text-left shadow-sm transition-colors hover:border-emerald-300">
                         <span class="block aspect-[4/3] overflow-hidden bg-slate-100">
-                            <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}" loading="lazy"
+                            <img src="{{ image_url($gallery->image) }}" alt="{{ $gallery->title }}" loading="lazy"
                                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                         </span>
                         <span class="block p-4">

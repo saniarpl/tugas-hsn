@@ -53,7 +53,7 @@
             @forelse($committees as $committee)
                 <div class="rounded-lg border border-slate-200 bg-white p-6 text-center shadow-sm transition-colors hover:border-emerald-300">
                     @if($committee->image)
-                        <img src="{{ asset('storage/' . $committee->image) }}" alt="{{ $committee->name }}"
+                        <img src="{{ image_url($committee->image) }}" alt="{{ $committee->name }}"
                              loading="lazy"
                              class="mx-auto h-24 w-24 rounded-full object-cover ring-1 ring-slate-200">
                     @else

@@ -20,7 +20,7 @@
     <div>
         <label class="block font-bold mb-1 text-green-900">Gambar Banner Saat Ini</label>
         @if($carousel->image)
-            <img src="{{ asset('storage/'.$carousel->image) }}" class="w-48 h-24 object-cover rounded mb-2 border border-green-200">
+            <img src="{{ image_url($carousel->image) }}" class="w-48 h-24 object-cover rounded mb-2 border border-green-200">
         @endif
         <input type="file" name="image" class="w-full border p-2 rounded">
     </div>

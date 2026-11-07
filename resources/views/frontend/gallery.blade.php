@@ -24,11 +24,11 @@
         <div class="grid grid-cols-1 gap-5 {{ $galleryGrid }}">
             @foreach($galleries as $gallery)
                 <button type="button" @click="show({{ $loop->index }})"
-                        data-full="{{ asset('storage/' . $gallery->image) }}"
+                        data-full="{{ image_url($gallery->image) }}"
                         data-title="{{ $gallery->title }}"
                         class="group overflow-hidden rounded-lg border border-slate-200 bg-white text-left shadow-sm transition-colors hover:border-emerald-300">
                     <span class="block aspect-[4/3] overflow-hidden bg-slate-100">
-                        <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}" loading="lazy"
+                        <img src="{{ image_url($gallery->image) }}" alt="{{ $gallery->title }}" loading="lazy"
                              class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                     </span>
                     <span class="block p-4">

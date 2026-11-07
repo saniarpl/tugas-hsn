@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Committee;
+use App\Support\ImageStorage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class CommitteeController extends Controller
@@ -33,7 +33,7 @@ class CommitteeController extends Controller
         $data = $request->only(['name', 'position', 'organization', 'period', 'type']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('committees', 'public');
+            $data['image'] = ImageStorage::store('committees', $request->file('image'));
         }
 
         Committee::create($data);
@@ -55,10 +55,8 @@ class CommitteeController extends Controller
         $data = $request->only(['name', 'position', 'organization', 'period', 'type']);
 
         if ($request->hasFile('image')) {
-            if ($committee->image) {
-                Storage::disk('public')->delete($committee->image);
-            }
-            $data['image'] = $request->file('image')->store('committees', 'public');
+            ImageStorage::delete($committee->image);
+            $data['image'] = ImageStorage::store('committees', $request->file('image'));
         }
 
         $committee->update($data);
@@ -68,9 +66,7 @@ class CommitteeController extends Controller
 
     public function destroy(Committee $committee): RedirectResponse
     {
-        if ($committee->image) {
-            Storage::disk('public')->delete($committee->image);
-        }
+        ImageStorage::delete($committee->image);
         $committee->delete();
 
         return redirect()->back()->with('success', 'Data pengurus berhasil dihapus.');

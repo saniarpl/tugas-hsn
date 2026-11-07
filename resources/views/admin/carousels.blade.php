@@ -58,7 +58,7 @@
                     <tr class="border-b hover:bg-slate-50">
                         <td class="p-3">
                             @if($committee->image)
-                                <img src="{{ asset('storage/' . $committee->image) }}" class="w-10 h-10 object-cover rounded-full border border-slate-200" alt="Foto">
+                                <img src="{{ image_url($committee->image) }}" class="w-10 h-10 object-cover rounded-full border border-slate-200" alt="Foto">
                             @else
                                 <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">NU</div>
                             @endif

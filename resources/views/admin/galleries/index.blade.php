@@ -15,7 +15,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         @forelse($galleries as $gallery)
             <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm flex flex-col">
-                <img src="{{ asset('storage/' . $gallery->image) }}" class="w-full h-48 object-cover">
+                <img src="{{ image_url($gallery->image) }}" class="w-full h-48 object-cover">
                 <div class="p-4 flex justify-between items-center">
                     <h3 class="font-bold text-slate-800 text-xs truncate mr-2">{{ $gallery->title }}</h3>
                     <form action="{{ route('admin.galleries.destroy', $gallery->id) }}" method="POST" onsubmit="return confirm('Hapus foto ini?')">

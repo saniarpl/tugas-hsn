@@ -42,7 +42,7 @@
     <div>
         <label class="block font-bold mb-1 text-green-900">Gambar Utama Saat Ini</label>
         @if($news->image)
-            <img src="{{ asset('storage/'.$news->image) }}" class="w-40 h-24 object-cover rounded mb-2 border border-green-200 shadow-sm">
+            <img src="{{ image_url($news->image) }}" class="w-40 h-24 object-cover rounded mb-2 border border-green-200 shadow-sm">
         @endif
         <input type="file" name="image" class="w-full border border-green-300 p-2 rounded">
         <small class="text-gray-500">Biarkan kosong jika tidak ingin mengubah gambar.</small>

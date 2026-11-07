@@ -58,7 +58,7 @@
             @forelse($news as $row)
             <tr class="border-b border-green-100 hover:bg-green-50">
                 <td class="p-3">
-                    <img src="{{ asset('storage/'.$row->image) }}" class="w-16 h-12 object-cover rounded border border-green-200">
+                    <img src="{{ image_url($row->image) }}" class="w-16 h-12 object-cover rounded border border-green-200">
                 </td>
                 <td class="p-3 font-semibold text-green-900">{{ $row->title }}</td>
                 <td class="p-3 text-gray-600">{{ $row->category }}</td>

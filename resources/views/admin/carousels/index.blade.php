@@ -20,7 +20,7 @@
                 <div>
                     <div class="h-44 bg-slate-100 relative">
                         @if($carousel->image)
-                            <img src="{{ asset('storage/' . $carousel->image) }}" class="w-full h-full object-cover">
+                            <img src="{{ image_url($carousel->image) }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-xs font-bold text-slate-400">Tidak ada gambar</div>
                         @endif

@@ -10,7 +10,7 @@
                 @foreach($carousels as $key => $carousel)
                     <div class="absolute inset-0 transition-opacity duration-700 ease-in-out {{ $key === 0 ? 'opacity-100' : 'opacity-0' }}">
                         @if($carousel->image)
-                            <img src="{{ asset('storage/' . $carousel->image) }}" class="w-full h-full object-cover object-center" alt="{{ $carousel->title }}">
+                            <img src="{{ image_url($carousel->image) }}" class="w-full h-full object-cover object-center" alt="{{ $carousel->title }}">
                         @else
                             <div class="w-full h-full bg-gradient-to-r from-emerald-900 via-emerald-800 to-green-950 flex items-center justify-center"></div>
                         @endif
@@ -50,7 +50,7 @@
                     <div>
                         @if($item->image)
                             <div class="h-48 overflow-hidden relative">
-                                <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500" alt="{{ $item->title }}">
+                                <img src="{{ image_url($item->image) }}" class="w-full h-full object-cover transform hover:scale-105 transition duration-500" alt="{{ $item->title }}">
                             </div>
                         @else
                             <div class="h-48 bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold text-xs">

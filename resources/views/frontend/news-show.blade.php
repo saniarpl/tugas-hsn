@@ -6,14 +6,14 @@
 @section('og_type', 'article')
 @section('og_title', $item->title . ' - WANUWIN')
 @section('og_description', \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($item->content))), 160, ''))
-@section('og_image', $item->image ? asset('storage/' . $item->image) : asset('favicon.ico'))
+@section('og_image', $item->image ? image_url($item->image) : asset('favicon.ico'))
 @section('meta')
 <script type="application/ld+json">
 {!! json_encode([
     '@context' => 'https://schema.org',
     '@type' => 'NewsArticle',
     'headline' => $item->title,
-    'image' => $item->image ? [asset('storage/' . $item->image)] : [],
+    'image' => $item->image ? [image_url($item->image)] : [],
     'datePublished' => optional($item->created_at)->toIso8601String(),
     'dateModified' => optional($item->updated_at)->toIso8601String(),
     'author' => [['@type' => 'Organization', 'name' => 'WANUWIN - NU Windunegara']],
@@ -41,7 +41,7 @@
     <article class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
         @if($item->image)
             <div class="aspect-[16/9] w-full overflow-hidden bg-slate-100">
-                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover">
+                <img src="{{ image_url($item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover">
             </div>
         @endif
 
@@ -113,7 +113,7 @@
                     <a href="{{ route('news.show', $rel->id) }}" class="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-colors hover:border-emerald-300">
                         @if($rel->image)
                             <div class="aspect-[16/10] overflow-hidden bg-slate-100">
-                                <img src="{{ asset('storage/' . $rel->image) }}" alt="{{ $rel->title }}" loading="lazy"
+                                <img src="{{ image_url($rel->image) }}" alt="{{ $rel->title }}" loading="lazy"
                                      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]">
                             </div>
                         @else
