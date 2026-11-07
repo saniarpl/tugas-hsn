@@ -85,7 +85,7 @@
             <div class="flex flex-col items-center justify-center bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-center">
                 <p class="text-xs font-bold text-amber-300 mb-2">REKENING RESMI DONASI</p>
                 <span class="text-lg font-black tracking-wider text-white">Bank BRI</span>
-                <span class="text-xl font-extrabold text-amber-400 my-1">6823-01-029182-53-1</span>
+                <span class="text-xl font-extrabold text-amber-400 my-1">6823-0xx-87xxx</span>
                 <span class="text-[11px] text-emerald-200">a.n. Panitia Pembangunan / NU Windunegara</span>
             </div>
         </div>
