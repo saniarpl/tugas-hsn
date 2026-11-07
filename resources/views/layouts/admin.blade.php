@@ -10,23 +10,14 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         [x-cloak] { display: none !important; }
-        .admin-bg {
-            background-color: #eef4f1;
-            background-image:
-                radial-gradient(600px circle at 15% 0%, rgba(16,185,129,.10), transparent 60%),
-                radial-gradient(500px circle at 95% 10%, rgba(251,191,36,.12), transparent 60%);
-        }
-        .side-link { position: relative; transition: all .25s cubic-bezier(.22,1,.36,1); }
-        .side-link:hover { transform: translateX(3px); }
+        .admin-bg { background-color: #f4f6f5; }
+        .side-link { position: relative; transition: background-color .2s ease, color .2s ease; }
         .side-link.is-active {
-            background: linear-gradient(135deg, #047857, #059669);
+            background: #047857;
             color: #fff !important;
-            box-shadow: 0 10px 24px -8px rgba(4,120,87,.6), inset 0 1px 0 rgba(255,255,255,.25);
+            box-shadow: 0 8px 20px -10px rgba(4,120,87,.55);
         }
         .side-link.is-active svg { color: #fde68a; }
-        @keyframes riseIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-        .rise { animation: riseIn .6s cubic-bezier(.22,1,.36,1) backwards; }
-        .rise-1 { animation-delay: .05s } .rise-2 { animation-delay: .12s } .rise-3 { animation-delay: .19s }
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 99px; }
         .main-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -44,7 +35,7 @@
 
     <!-- Sidebar Admin -->
     <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-[110%]'"
-           class="fixed lg:sticky top-0 z-50 h-screen w-[270px] shrink-0 flex flex-col transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] lg:translate-x-0 lg:h-[calc(100vh-2.5rem)] lg:rounded-3xl overflow-hidden bg-[#06281d] text-slate-300 border border-white/10 shadow-2xl shadow-emerald-950/40">
+           class="fixed top-0 left-0 z-50 h-screen w-[270px] shrink-0 flex flex-col transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] lg:sticky lg:top-5 lg:left-auto lg:translate-x-0 lg:h-[calc(100vh-2.5rem)] lg:self-start lg:rounded-3xl overflow-hidden bg-[#06281d] text-slate-300 border border-white/10 shadow-2xl shadow-emerald-950/40">
         <!-- Dekorasi -->
         <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-28 -left-20 w-64 h-64 rounded-full bg-amber-400/15 blur-3xl pointer-events-none"></div>
@@ -58,7 +49,7 @@
                 <div>
                     <span class="font-extrabold text-white text-lg tracking-tight block leading-none">WANUWIN</span>
                     <span class="inline-flex items-center gap-1.5 text-[9px] text-amber-300 font-bold uppercase tracking-widest mt-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Panel Admin
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Panel Admin
                     </span>
                 </div>
             </a>

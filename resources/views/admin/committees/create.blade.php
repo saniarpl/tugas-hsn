@@ -17,6 +17,11 @@
         </div>
 
         <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Periode</label>
+            <input type="text" name="period" placeholder="Contoh: 2025-2028" required class="w-full border border-slate-200 rounded-lg p-2 text-sm focus:ring-emerald-500">
+        </div>
+
+        <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Organisasi / Banom</label>
             <select name="organization" required class="w-full border border-slate-200 rounded-lg p-2 text-sm focus:ring-emerald-500">
                 <option value="nu">Ranting NU (Nahdlatul Ulama)</option>
@@ -30,7 +35,7 @@
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Foto (Opsional)</label>
-            <input type="file" name="photo" class="text-xs">
+            <input type="file" name="image" class="text-xs">
         </div>
 
         <div class="pt-4 flex justify-end gap-2">

@@ -31,7 +31,7 @@
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Foto Baru (Opsional)</label>
-            <input type="file" name="photo" class="text-xs">
+            <input type="file" name="image" class="text-xs">
         </div>
 
         <div class="pt-4 flex justify-end gap-2">

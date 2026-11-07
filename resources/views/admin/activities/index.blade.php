@@ -8,7 +8,7 @@
             <h1 class="text-2xl font-extrabold text-slate-800 tracking-tight">Agenda Kegiatan</h1>
             <p class="text-xs text-slate-500 font-medium mt-1">Kelola jadwal dan dokumentasi agenda Jam'iyyah NU.</p>
         </div>
-        <button @click="openModal = true; editMode = false; currentActivity = {}" class="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-md transition">
+        <button @click="openModal = true; editMode = false; currentActivity = { date: '{{ now()->toDateString() }}' }" class="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-md transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             <span>Tambah Agenda</span>
         </button>
@@ -35,10 +35,15 @@
                                     <div class="w-16 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-[10px] text-slate-400 font-bold">No Img</div>
                                 @endif
                             </td>
-                            <td class="py-4 px-6 font-bold text-slate-800 max-w-md truncate">{{ $activity->title }}</td>
+                            <td class="py-4 px-6 max-w-md">
+                                <p class="font-bold text-slate-800 truncate">{{ $activity->title }}</p>
+                                @if($activity->location)
+                                    <p class="text-[10px] text-slate-400 font-semibold mt-0.5 truncate">{{ $activity->location }}</p>
+                                @endif
+                            </td>
                             <td class="py-4 px-6 text-emerald-700 font-bold">{{ \Carbon\Carbon::parse($activity->date)->translatedFormat('d M Y') }}</td>
                             <td class="py-4 px-6 text-right space-x-2">
-                                <button @click="openModal = true; editMode = true; currentActivity = {{ json_encode($activity) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
+                                <button @click="openModal = true; editMode = true; currentActivity = @js($activity)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
                                     Edit
                                 </button>
                                 <form action="{{ route('admin.activities.destroy', $activity->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus agenda ini?')">
@@ -73,17 +78,22 @@
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nama / Judul Kegiatan</label>
-                    <input type="text" name="title" :value="currentActivity.title" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                    <input type="text" name="title" x-model="currentActivity.title" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
                 </div>
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Tanggal Kegiatan</label>
-                    <input type="date" name="date" :value="currentActivity.date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                    <input type="date" name="date" x-model="currentActivity.date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Lokasi Kegiatan</label>
+                    <input type="text" name="location" x-model="currentActivity.location" placeholder="Contoh: Masjid Baiturrahman" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
                 </div>
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Deskripsi Kegiatan</label>
-                    <textarea name="description" rows="4" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none" x-text="currentActivity.description"></textarea>
+                    <textarea name="description" rows="4" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none" x-model="currentActivity.description"></textarea>
                 </div>
 
                 <div>

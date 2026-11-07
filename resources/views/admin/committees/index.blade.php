@@ -8,7 +8,7 @@
             <h1 class="text-2xl font-extrabold text-slate-800 tracking-tight">Pengurus & Banom</h1>
             <p class="text-xs text-slate-500 font-medium mt-1">Kelola susunan pengurus IPNU, IPPNU, Fatayat, Muslimat, dan Banser.</p>
         </div>
-        <button @click="openModal = true; editMode = false; currentCommittee = {}" class="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-md transition">
+        <button @click="openModal = true; editMode = false; currentCommittee = { organization: 'ipnu', type: 'Syuriyah' }" class="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-md transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             <span>Tambah Pengurus</span>
         </button>
@@ -44,9 +44,12 @@
                                 <span class="bg-emerald-50 text-emerald-800 font-bold px-3 py-1 rounded-full text-[10px] uppercase border border-emerald-100">
                                     {{ $committee->organization }}
                                 </span>
+                                <p class="text-[10px] text-slate-400 font-semibold mt-1">
+                                    {{ $committee->period ?: '-' }}{{ $committee->type ? ' · '.$committee->type : '' }}
+                                </p>
                             </td>
                             <td class="py-4 px-6 text-right space-x-2">
-                                <button @click="openModal = true; editMode = true; currentCommittee = {{ json_encode($committee) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
+                                <button @click="openModal = true; editMode = true; currentCommittee = @js($committee)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
                                     Edit
                                 </button>
                                 <form action="{{ route('admin.committees.destroy', $committee->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus data pengurus ini?')">
@@ -81,17 +84,18 @@
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Nama Lengkap</label>
-                    <input type="text" name="name" :value="currentCommittee.name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                    <input type="text" name="name" x-model="currentCommittee.name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
                 </div>
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Jabatan</label>
-                    <input type="text" name="position" :value="currentCommittee.position" required placeholder="Contoh: Ketua, Sekretaris, Bendahara" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                    <input type="text" name="position" x-model="currentCommittee.position" required placeholder="Contoh: Ketua, Sekretaris, Bendahara" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
                 </div>
 
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Banom / Organisasi</label>
-                    <select name="organization" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                    <select name="organization" x-model="currentCommittee.organization" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                        <option value="nu">NU (Ranting)</option>
                         <option value="ipnu">IPNU</option>
                         <option value="ippnu">IPPNU</option>
                         <option value="fatayat">Fatayat</option>
@@ -100,9 +104,24 @@
                     </select>
                 </div>
 
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Periode</label>
+                        <input type="text" name="period" x-model="currentCommittee.period" required placeholder="Contoh: 2025-2028" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Jenis Kepengurusan</label>
+                        <select name="type" x-model="currentCommittee.type" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none">
+                            <option value="">- Pilih -</option>
+                            <option value="Syuriyah">Syuriyah</option>
+                            <option value="Tanfidziyah">Tanfidziyah</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Foto Pengurus</label>
-                    <input type="file" name="image" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <input type="file" name="image" accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-emerald-500 outline-none">
                 </div>
 
                 <div class="flex justify-end gap-3 pt-4">

@@ -58,7 +58,7 @@
                                 <a href="{{ route('admin.members.card', $member->id) }}" target="_blank" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-xs font-bold transition">
                                     Kartu
                                 </a>
-                                <button @click="openModal = true; editMode = true; currentMember = {{ json_encode($member) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
+                                <button @click="openModal = true; editMode = true; currentMember = @js($member)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
                                     Edit
                                 </button>
                                 <form action="{{ route('admin.members.destroy', $member->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus data warga ini?')">

@@ -4,27 +4,32 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class ActivityController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $activities = Activity::latest()->get();
+
         return view('admin.activities.index', compact('activities'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'date' => 'required|date',
+            'location' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        $data = $request->only(['title', 'date', 'description']);
+        // location ikut disimpan karena kolomnya wajib pada skema lama.
+        $data = $request->only(['title', 'date', 'location', 'description']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('activities', 'public');
@@ -35,17 +40,17 @@ class ActivityController extends Controller
         return redirect()->back()->with('success', 'Agenda kegiatan berhasil disimpan.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Activity $activity): RedirectResponse
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'date' => 'required|date',
+            'location' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
-        $activity = Activity::findOrFail($id);
-        $data = $request->only(['title', 'date', 'description']);
+        $data = $request->only(['title', 'date', 'location', 'description']);
 
         if ($request->hasFile('image')) {
             if ($activity->image) {
@@ -59,9 +64,8 @@ class ActivityController extends Controller
         return redirect()->back()->with('success', 'Agenda kegiatan berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Activity $activity): RedirectResponse
     {
-        $activity = Activity::findOrFail($id);
         if ($activity->image) {
             Storage::disk('public')->delete($activity->image);
         }

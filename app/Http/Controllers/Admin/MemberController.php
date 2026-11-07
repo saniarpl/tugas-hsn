@@ -12,6 +12,7 @@ class MemberController extends Controller
     public function index()
     {
         $members = Member::latest()->get();
+
         return view('admin.members.index', compact('members'));
     }
 
@@ -70,6 +71,11 @@ class MemberController extends Controller
     public function destroy($id)
     {
         $member = Member::findOrFail($id);
+
+        if ($member->photo) {
+            Storage::disk('public')->delete($member->photo);
+        }
+
         $member->delete();
 
         return redirect()->back()->with('success', 'Data warga berhasil dihapus.');
@@ -78,6 +84,7 @@ class MemberController extends Controller
     public function show($id)
     {
         $member = Member::findOrFail($id);
+
         return view('admin.members.card', compact('member'));
     }
 }

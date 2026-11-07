@@ -31,7 +31,7 @@
                             <td class="py-4 px-6 text-emerald-700 font-bold">Rp {{ number_format($donation->amount, 0, ',', '.') }}</td>
                             <td class="py-4 px-6 text-slate-500">{{ \Carbon\Carbon::parse($donation->date)->translatedFormat('d M Y') }}</td>
                             <td class="py-4 px-6 text-right space-x-2">
-                                <button @click="openModal = true; editMode = true; currentItem = {{ json_encode($donation) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">Edit</button>
+                                <button @click="openModal = true; editMode = true; currentItem = @js($donation)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">Edit</button>
                                 <form action="{{ route('admin.donations.destroy', $donation->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus data infaq ini?')">
                                     @csrf
                                     @method('DELETE')

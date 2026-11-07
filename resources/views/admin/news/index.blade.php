@@ -38,7 +38,7 @@
                             <td class="py-4 px-6 font-bold text-slate-800 max-w-md truncate">{{ $item->title }}</td>
                             <td class="py-4 px-6 text-slate-500">{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d M Y') }}</td>
                             <td class="py-4 px-6 text-right space-x-2">
-                                <button @click="openModal = true; editMode = true; currentNews = {{ json_encode($item) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
+                                <button @click="openModal = true; editMode = true; currentNews = @js($item)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
                                     Edit
                                 </button>
                                 <form action="{{ route('admin.news.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus berita ini?')">

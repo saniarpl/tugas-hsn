@@ -7,59 +7,83 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; }
+        :focus-visible { outline: 2px solid #047857; outline-offset: 2px; }
     </style>
 </head>
-<body class="bg-slate-900 min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
+<body class="flex min-h-screen items-center justify-center bg-slate-100 p-4 text-slate-700 sm:p-6">
 
-    <div class="absolute inset-0 bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-900 opacity-80 pointer-events-none"></div>
+    <div class="w-full max-w-4xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="grid md:grid-cols-2">
 
-    <div class="w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl relative z-10 border border-slate-100">
-        
-        <!-- Header Form -->
-        <div class="text-center mb-8">
-            <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg border border-amber-300">
-                <span class="font-extrabold text-slate-950 text-2xl font-serif">NU</span>
+            <div class="hidden flex-col justify-between bg-[#043D2B] p-10 text-white md:flex">
+                <div class="flex items-center gap-3">
+                    <span class="grid h-11 w-11 place-items-center rounded-md bg-white/10 text-base font-extrabold" aria-hidden="true">NU</span>
+                    <div>
+                        <p class="text-lg font-extrabold leading-none">WANUWIN</p>
+                        <p class="mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-300">Ranting NU Windunegara</p>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300">Portal Resmi</p>
+                    <h2 class="mt-3 text-2xl font-bold leading-snug">Panel Administrasi WANUWIN</h2>
+                    <p class="mt-3 text-sm leading-6 text-emerald-50/75">Kelola warta berita, agenda kegiatan, galeri, data anggota, infaq masjid, dan masukan masyarakat dalam satu tempat.</p>
+                </div>
+
+                <p class="text-xs leading-5 text-emerald-100/50">Ranting Nahdlatul Ulama Desa Windunegara<br>Kec. Wangon, Kab. Banyumas</p>
             </div>
-            <h1 class="text-2xl font-black text-slate-800">Login Administrator</h1>
-            <p class="text-xs text-slate-500 mt-1 font-medium">Masuk untuk mengelola portal WANUWIN</p>
+
+            <div class="p-8 sm:p-10">
+                <div class="mb-8 md:hidden">
+                    <span class="grid h-11 w-11 place-items-center rounded-md bg-[#065F46] text-base font-extrabold text-white" aria-hidden="true">NU</span>
+                </div>
+
+                <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-700">Administrator</p>
+                <h1 class="mt-1 text-xl font-bold text-slate-900">Masuk Panel Admin</h1>
+                <p class="mt-2 text-sm text-slate-500">Gunakan akun yang telah terdaftar untuk melanjutkan.</p>
+
+                @if($errors->any())
+                    <div class="mt-6 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-xs font-semibold text-red-700" role="alert">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
+                <form action="{{ route('login.post') }}" method="POST" class="mt-6 space-y-5">
+                    @csrf
+
+                    <div>
+                        <label for="email" class="mb-1.5 block text-xs font-bold text-slate-700">Email Admin</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
+                               placeholder="admin@wanuwin.id"
+                               class="w-full rounded-md border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 outline-none transition-colors focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20">
+                    </div>
+
+                    <div>
+                        <label for="password" class="mb-1.5 block text-xs font-bold text-slate-700">Password</label>
+                        <input id="password" type="password" name="password" required autocomplete="current-password"
+                               placeholder="••••••••"
+                               class="w-full rounded-md border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 outline-none transition-colors focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20">
+                    </div>
+
+                    <label class="flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-600">
+                        <input type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-emerald-700 focus:ring-emerald-600">
+                        <span>Ingat saya pada perangkat ini</span>
+                    </label>
+
+                    <button type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#065F46] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#054F3A]">
+                        Masuk ke Dashboard
+                        <span aria-hidden="true">&rarr;</span>
+                    </button>
+                </form>
+
+                <div class="mt-8 border-t border-slate-200 pt-5">
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 transition-colors hover:text-emerald-800">
+                        <span aria-hidden="true">&larr;</span> Kembali ke Beranda
+                    </a>
+                </div>
+            </div>
         </div>
-
-        @if($errors->any())
-            <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-bold">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
-        <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
-            @csrf
-            
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Email Admin</label>
-                <input type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="admin@wanuwin.id" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none transition font-medium">
-            </div>
-
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Password</label>
-                <input type="password" name="password" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none transition font-medium">
-            </div>
-
-            <div class="flex items-center justify-between text-xs">
-                <label class="flex items-center gap-2 text-slate-600 font-medium cursor-pointer">
-                    <input type="checkbox" name="remember" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                    <span>Ingat Saya</span>
-                </label>
-            </div>
-
-            <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-3.5 rounded-xl shadow-lg transition">
-                Masuk ke Dashboard
-            </button>
-        </form>
-
-        <div class="mt-8 text-center">
-            <a href="{{ route('home') }}" class="text-xs font-bold text-slate-400 hover:text-emerald-700 transition">&larr; Kembali ke Beranda Utama</a>
-        </div>
-
     </div>
 
 </body>

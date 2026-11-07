@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="p-5 pt-0 flex justify-end gap-2 border-t border-slate-100/80 mt-2">
-                    <button @click="openModal = true; editMode = true; currentCarousel = {{ json_encode($carousel) }}" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
+                    <button @click="openModal = true; editMode = true; currentCarousel = @js($carousel)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition">
                         Edit
                     </button>
                     <form action="{{ route('admin.carousels.destroy', $carousel->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus banner ini?')">

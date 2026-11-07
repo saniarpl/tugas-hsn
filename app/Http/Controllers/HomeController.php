@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Carousel;
-use App\Models\News;
 use App\Models\Activity;
+use App\Models\Carousel;
 use App\Models\Committee;
-use App\Models\Feedback;
 use App\Models\Donation;
-use App\Models\Gallery; // Import Model Gallery
+use App\Models\Feedback;
+use App\Models\Gallery;
+use App\Models\News;
+use Illuminate\Http\Request; // Import Model Gallery
 
 class HomeController extends Controller
 {
@@ -19,7 +19,7 @@ class HomeController extends Controller
         $news = News::latest()->take(6)->get();
         $activities = Activity::latest()->take(4)->get();
         $donations = Donation::orderBy('date', 'desc')->take(5)->get();
-        
+
         // Ambil 6 foto galeri terbaru untuk Halaman Utama (Beranda)
         $galleries = Gallery::latest()->take(6)->get();
 
@@ -30,7 +30,7 @@ class HomeController extends Controller
     {
         // Ambil seluruh foto galeri untuk Halaman Khusus Galeri (dengan Pagination)
         $galleries = Gallery::latest()->paginate(12);
-        
+
         return view('frontend.gallery', compact('galleries'));
     }
 
@@ -42,36 +42,36 @@ class HomeController extends Controller
                 'description' => 'Wadah kaderisasi, pembinaan, dan perjuangan pelajar putra Nahdlatul Ulama Desa Windunegara.',
                 'color' => 'from-emerald-900 to-green-800',
                 'about' => 'IPNU Windunegara bertugas membina generasi muda dan pelajar Islam Ahlussunnah wal Jamaah An-Nahdliyah.',
-                'proker' => ['Makesta (Masa Kesetiaan Anggota)', 'Kajian Rutin Keislaman & Keilmuan', 'Latihan Hadroh', 'Peringatan Hari Besar Islam (PHBI)']
+                'proker' => ['Makesta (Masa Kesetiaan Anggota)', 'Kajian Rutin Keislaman & Keilmuan', 'Latihan Hadroh', 'Peringatan Hari Besar Islam (PHBI)'],
             ],
             'ippnu' => [
                 'title' => 'Ikatan Pelajar Putri Nahdlatul Ulama (IPPNU)',
                 'description' => 'Wadah pembinaan, pergerakan, dan pemberdayaan pelajar putri NU Windunegara.',
                 'color' => 'from-emerald-800 to-teal-800',
                 'about' => 'IPPNU Windunegara berfokus pada pengembangan potensi, kemandirian, dan kepemimpinan pelajar putri NU.',
-                'proker' => ['Makesta Putri', 'Kajian Fiqih Wanita', 'Pelatihan Kewirausahaan & Ekonomi Kreatif', 'Bakti Sosial & Literasi']
+                'proker' => ['Makesta Putri', 'Kajian Fiqih Wanita', 'Pelatihan Kewirausahaan & Ekonomi Kreatif', 'Bakti Sosial & Literasi'],
             ],
             'fatayat' => [
                 'title' => 'Fatayat NU',
                 'description' => 'Organisasi pemudi Islam Nahdlatul Ulama Desa Windunegara.',
                 'color' => 'from-green-800 to-emerald-950',
                 'about' => 'Fatayat NU Ranting Windunegara wadah perjuangan pemudi NU dalam pendidikan keluarga dan sosial-keagamaan.',
-                'proker' => ['Pengajian Rutin Yasin', 'Penyuluhan Kesehatan Ibu & Anak', 'Pemberdayaan UMKM Pemudi', 'Santunan Anak Yatim']
+                'proker' => ['Pengajian Rutin Yasin', 'Penyuluhan Kesehatan Ibu & Anak', 'Pemberdayaan UMKM Pemudi', 'Santunan Anak Yatim'],
             ],
             'muslimat' => [
                 'title' => 'Muslimat NU',
                 'description' => 'Organisasi wanita Islam Nahdlatul Ulama Desa Windunegara.',
                 'color' => 'from-emerald-950 to-slate-900',
                 'about' => 'Muslimat NU Windunegara menjadi pilar utama dalam dakwah keagamaan wanita dan bina keluarga sakinah.',
-                'proker' => ['Majelis Taklim Bulanan', 'Bina Keluarga Sakinah', 'Gerakan Infak Sosial', 'Penguatan Ekonomi Jam\'iyyah']
+                'proker' => ['Majelis Taklim Bulanan', 'Bina Keluarga Sakinah', 'Gerakan Infak Sosial', 'Penguatan Ekonomi Jam\'iyyah'],
             ],
             'banser' => [
                 'title' => 'Barisan Ansor Serbaguna (Banser)',
                 'description' => 'Kader inti Pemuda Ansor pengawal ulama, kiai, dan benteng NKRI.',
                 'color' => 'from-amber-900 to-slate-900',
                 'about' => 'Banser Ranting Windunegara bertugas menjaga keamanan kegiatan keagamaan, mengawal ulama, serta tanggap bencana.',
-                'proker' => ['Pengamanan Kegiatan Keagamaan', 'Diklatsar Banser', 'Tanggap Bencana & Kerja Bakti', 'Latihan Kesamaptaan']
-            ]
+                'proker' => ['Pengamanan Kegiatan Keagamaan', 'Diklatsar Banser', 'Tanggap Bencana & Kerja Bakti', 'Latihan Kesamaptaan'],
+            ],
         ];
 
         $org = $organizationsData[$slug] ?? [
@@ -79,11 +79,12 @@ class HomeController extends Controller
             'description' => 'Badan Otonom Nahdlatul Ulama Windunegara.',
             'color' => 'from-emerald-900 to-green-950',
             'about' => 'Badan Otonom Nahdlatul Ulama Desa Windunegara.',
-            'proker' => ['Kegiatan Rutin Keagamaan']
+            'proker' => ['Kegiatan Rutin Keagamaan'],
         ];
 
-        // Ambil data pengurus terkait banom yang dipilih
-        $committees = Committee::where('organization', $slug)->get();
+        // Ambil data pengurus terkait banom yang dipilih.
+        // LOWER() membuat data lama yang masih berhuruf besar tetap tampil.
+        $committees = Committee::whereRaw('LOWER(organization) = ?', [strtolower($slug)])->get();
 
         return view('frontend.organization', compact('org', 'slug', 'committees'));
     }
